@@ -128,3 +128,40 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Dependencies
+node_modules
+jspm_packages
+
+# Serverless
+.serverless
+
+# Dynamodb
+.dynamodb
+
+# Webpack
+.webpack
+.esbuild
+
+# Output
+dist
+
+# Dotenv files
+.env*.local
+
+# Local folder
+local
+
+# testing
+coverage
+
+# Misc
+.DS_Store
+*.pem
+Thumbs.db
+
+# Error logs
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
