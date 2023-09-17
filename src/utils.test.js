@@ -88,6 +88,7 @@ describe('getRandomUserData', () => {
       name: 'Louison Garcia',
       dob: '1988-04-20T20:16:52.648Z',
       gender: 'male',
+      seed: '308967bfe1102415',
     });
   });
 

@@ -7,6 +7,7 @@ export interface UserData {
   dob: string;
   age: number;
   gender: Gender;
+  seed: string;
 }
 
 interface RandomUser {
@@ -50,8 +51,9 @@ export const getRandomUserData = async (): Promise<UserData> => {
   const dob = randomUser.dob.date;
   const { age } = randomUser.dob;
   const { gender } = randomUser;
+  const { seed } = data.info;
 
-  return { name, dob, age, gender };
+  return { name, dob, age, gender, seed };
 };
 
 /**
