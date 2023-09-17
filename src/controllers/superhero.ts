@@ -1,6 +1,8 @@
 import type { NextFunction, Request, Response } from 'express';
 
+import { createObject } from '@/awsUtils/s3';
 import {
+  getCSVData,
   getInvisibilityScore,
   getInvisibilityStatus,
   getUserData,
@@ -63,11 +65,24 @@ export const scoreController = async (
     invisibilityStatus,
     ...userData,
   };
+
+  const errors = [];
+  let uploadedFile;
+
+  // save to s3
+  try {
+    const csvData = getCSVData(compiledData);
+    const s3Key = `${compiledData.seed}.csv`;
+    uploadedFile = await createObject(s3Key, csvData, 'text/csv');
+  } catch (error) {
+    errors.push(error);
+  }
+
   /**
    * generate CSV file
    * save the file to s3 (key should be the seed id)
    * and return the json
    */
 
-  res.json(compiledData);
+  res.json({ compiledData, uploadedFile, errors });
 };
