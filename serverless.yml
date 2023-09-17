@@ -43,6 +43,9 @@ functions:
       - httpApi:
           path: "/"
           method: "*"
+      - httpApi:
+          path: "/score"
+          method: "POST"
 
 package:
   patterns:
