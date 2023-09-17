@@ -12,22 +12,16 @@ export const createObject = async (
   const s3 = new S3();
 
   const fileExtension = path.extname(key);
-  const calculatedContentType = mime.lookup(fileExtension);
+  const calculatedContentType = mime.getType(fileExtension);
 
   const bodyData = data;
   const s3params: S3.PutObjectRequest = {
     Body: bodyData,
     Bucket: bucketName,
     Key: key,
-    ContentType: contentType || calculatedContentType,
+    ContentType: contentType || calculatedContentType || 'text/plain',
     ACL: 'public-read',
   };
 
-  try {
-    return await s3.upload(s3params).promise();
-  } catch (err) {
-    // eslint-disable-next-line no-console
-    console.error('s3 createObject error ', err);
-    throw new Error('create object error');
-  }
+  return s3.upload(s3params).promise();
 };
