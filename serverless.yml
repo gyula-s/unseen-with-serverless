@@ -41,7 +41,7 @@ functions:
     # reservedConcurrency: 100
     events:
       - httpApi:
-          path: "/{proxy+}"
+          path: "/"
           method: "*"
 
 package:
