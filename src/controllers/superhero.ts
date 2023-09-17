@@ -1,14 +1,16 @@
-export const scoreController = async (req, res, _next) => {
-  const { superheroScore } = req.body;
-  if (typeof superheroScore !== 'number') {
-    res.status(400).json({ error: 'INVALID INPUT' });
-    return;
-  }
-  if (superheroScore < 0 || superheroScore > 100) {
-    res.status(400).json({ error: 'INVALID INPUT' });
-    return;
-  }
+import type { NextFunction, Request, Response } from 'express';
 
+import {
+  getInvisibilityScore,
+  getInvisibilityStatus,
+  getUserData,
+} from '@/utils';
+
+export const scoreController = async (
+  req: Request,
+  res: Response,
+  _next: NextFunction,
+) => {
   /**
    * 1. using fetch get a user from: https://randomuser.me/api/
    * 2. calculate the invisibility score:
@@ -28,5 +30,44 @@ export const scoreController = async (req, res, _next) => {
    * 6. consider large traffic and how to handle it
    * 7. consider logging, monitoring, and alerting
    */
-  res.json({ msg: 'SUCCESS' });
+
+  const { superheroScore } = req.body;
+  if (typeof superheroScore !== 'number') {
+    res.status(400).json({
+      error: 'INVALID INPUT. superheroScore is not a number',
+      body: req.body,
+    });
+    return;
+  }
+  if (superheroScore < 0 || superheroScore > 100) {
+    res.status(400).json({
+      error: 'INVALID INPUT. superheroScore is out of range. 0-100',
+      body: req.body,
+    });
+    return;
+  }
+
+  const userData = await getUserData();
+  const { age, gender } = userData;
+  const invisibilityScore = getInvisibilityScore({
+    superheroScore,
+    age,
+    gender,
+  });
+
+  const invisibilityStatus = getInvisibilityStatus(invisibilityScore);
+
+  const compiledData = {
+    superheroScore,
+    invisibilityScore,
+    invisibilityStatus,
+    ...userData,
+  };
+  /**
+   * generate CSV file
+   * save the file to s3 (key should be the seed id)
+   * and return the json
+   */
+
+  res.json(compiledData);
 };
