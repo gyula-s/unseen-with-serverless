@@ -85,8 +85,6 @@ functions:
 package:
   patterns:
     - "!**/*.test.ts"
-    - ${self:custom.prismaEngine.${self:custom.stage}}
-    - "node_modules/.prisma/client/schema.prisma"
   individually: true
 
 plugins:
