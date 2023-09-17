@@ -8,7 +8,9 @@ describe('Express app', () => {
       const response = await supertest(app).get('/');
 
       expect(response.statusCode).toEqual(200);
-      expect(response.body.msg).toEqual('Hello World');
+      expect(response.body.msg).toEqual(
+        'please POST your superhero score to /score, in the format: {“superheroScore”: 42.5 // Float between 0 and 100}',
+      );
     });
 
     it('should return `NOT FOUND` when GET a not found route', async () => {
