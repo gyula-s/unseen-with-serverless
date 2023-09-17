@@ -1,19 +1,37 @@
 import * as utils from './utils.ts';
 
+/**
+ * due to time constraints, only testing the happy paths
+ */
 describe('getInvisibilityScore', () => {
   it.todo('should return 0 if no invisibility is found');
 
-  it.todo(
-    'calculates correct invisibility score for a 39 year old male with a score of 0',
-  );
+  it('calculates correct invisibility score for a 39 year old male with a score of 0', () => {
+    const score = utils.getInvisibilityScore({
+      superheroScore: 0,
+      age: 39,
+      gender: 'male',
+    });
+    expect(score).toBe(14);
+  });
 
-  it.todo(
-    'calculates correct invisibility score for a 39 year old male with a score of 50',
-  );
+  it('calculates correct invisibility score for a 39 year old male with a score of 50', () => {
+    const score = utils.getInvisibilityScore({
+      superheroScore: 50,
+      age: 39,
+      gender: 'male',
+    });
+    expect(score).toBe(50);
+  });
 
-  it.todo(
-    'calculates correct invisibility score for a 39 year old male with a score of 100',
-  );
+  it('calculates correct invisibility score for a 39 year old male with a score of 100', () => {
+    const score = utils.getInvisibilityScore({
+      superheroScore: 100,
+      age: 39,
+      gender: 'male',
+    });
+    expect(score).toBe(85);
+  });
 
   it.todo('handles invalid score');
 
@@ -95,3 +113,25 @@ describe('getRandomUserData', () => {
 //     expect(utils.getRandomUserData).toHaveBeenCalled();
 //   });
 // });
+
+describe('getInvisibilityStatus', () => {
+  it("should return 'Not invisible' if score is 19", () => {
+    const status = utils.getInvisibilityStatus(19);
+    expect(status).toBe('Not invisible');
+  });
+
+  it("should return 'Partially Visible' if score is 27", () => {
+    const status = utils.getInvisibilityStatus(27);
+    expect(status).toBe('Camouflage');
+  });
+
+  it("should return 'Partially Visible' if score is 60", () => {
+    const status = utils.getInvisibilityStatus(60);
+    expect(status).toBe('Transparent');
+  });
+
+  it("should return 'Invisible' if score is 81", () => {
+    const status = utils.getInvisibilityStatus(81);
+    expect(status).toBe('Invisible');
+  });
+});

@@ -64,27 +64,82 @@ export const getUserData = async (_params?: unknown): Promise<UserData> => {
   return getRandomUserData();
 };
 
+export const getNormalisedScore = (score: number, gender: Gender): number => {
+  /**
+   * approximation for min/max
+   * let's assume that the max age of a hero is 120
+   * and the minimum age is 18
+   * the absolute minimum score a female hero can get is 0 while her age can be 120
+   * so the minimum score can be 8 * (0 - 120) = -600
+   * the absolute maximum score that a female hero can get is 100 while her age can be 18
+   * so the maximum score can be 8 * (100 - 18) = 704
+   * //the min/max scores could be better approximated, after looking at more data, age distribution, etc.
+   * ----------------
+   * female max score is 8 * (100 - 18) = 704
+   * female min score is 8 * (0 - 120) = -600
+   *
+   * male max score is 5 * (100 - 18) = 410
+   * male min score is 5 * (0 - 120) = -300
+   */
+  const minMaxScores = {
+    female: {
+      min: -600,
+      max: 704,
+    },
+    male: {
+      min: -300,
+      max: 410,
+    },
+  };
+
+  const normalisedScore =
+    ((score - minMaxScores[gender].min) /
+      (minMaxScores[gender].max - minMaxScores[gender].min)) *
+    100;
+  return Math.floor(normalisedScore);
+};
+
 /**
  * based on gender, age, and superhero score calculate the invisibility score
  * return a normalised score between 0 and 100
  */
-export const getInvisibilityScore = (
-  _superheroScore: number,
-  _age: number,
-  _gender: Gender,
-): number => {
-  // const maleGenderWeighting = 5;
-  // const femaleGenderWeighting = 8;
-  /**
-   * calculate score
-   * normalise score
-   * return score
-   */
-  return 1;
+export const getInvisibilityScore = ({
+  superheroScore,
+  age,
+  gender,
+}: {
+  superheroScore: number;
+  age: number;
+  gender: Gender;
+}): number => {
+  const genderWeighting = {
+    male: 5,
+    female: 8,
+  };
+  const weight = genderWeighting[gender];
+  const score = weight * (superheroScore - age);
+  return getNormalisedScore(score, gender);
 };
 
-export const normaliseScore = (_score: number): number => {
-  // figure out how to normalise the score
-  // figure out min and max scores
-  return 1;
+/**
+ * return the invisibility status based on the score
+ * 0 - 19 : Not invisible
+ * 20 - 39 : Camouflage
+ * 40 - 59 : Translucent
+ * 60 - 79 : Transparent
+ * 80 - 100 : Invisible
+ */
+export const getInvisibilityStatus = (score: number): string => {
+  switch (true) {
+    case score < 20:
+      return 'Not invisible';
+    case score < 40:
+      return 'Camouflage';
+    case score < 60:
+      return 'Translucent';
+    case score < 80:
+      return 'Transparent';
+    default:
+      return 'Invisible';
+  }
 };
