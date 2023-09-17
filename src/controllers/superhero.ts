@@ -68,7 +68,8 @@ export const scoreController = async (
   };
 
   const errors = [];
-  const s3Key = `${compiledData.seed}.csv`;
+  const timeStamp = new Date().toISOString().replace(/:/g, '-');
+  const s3Key = `${timeStamp}-${compiledData.seed}.csv`;
 
   // save to s3
   try {
