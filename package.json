@@ -17,6 +17,7 @@
     "check-types": "tsc --noEmit --pretty",
     "commit": "cz",
     "test": "jest",
+    "test:watch": "jest --watchAll",
     "test:dev": "start-server-and-test dev http://localhost:4000 'curl --head http://localhost:4000'",
     "db:push": "prisma db push",
     "prepare": "husky install",
