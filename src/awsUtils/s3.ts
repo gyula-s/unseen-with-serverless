@@ -20,7 +20,6 @@ export const createObject = async (
     Bucket: bucketName,
     Key: key,
     ContentType: contentType || calculatedContentType || 'text/plain',
-    ACL: 'public-read',
   };
 
   return s3.upload(s3params).promise();
