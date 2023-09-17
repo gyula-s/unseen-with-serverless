@@ -1,6 +1,7 @@
 import type { NextFunction, Request, Response } from 'express';
 
 import { createObject } from '@/awsUtils/s3';
+import type { CompiledData } from '@/utils';
 import {
   getCSVData,
   getInvisibilityScore,
@@ -59,7 +60,7 @@ export const scoreController = async (
 
   const invisibilityStatus = getInvisibilityStatus(invisibilityScore);
 
-  const compiledData = {
+  const compiledData: CompiledData = {
     superheroScore,
     invisibilityScore,
     invisibilityStatus,
@@ -67,14 +68,15 @@ export const scoreController = async (
   };
 
   const errors = [];
-  let uploadedFile;
+  const s3Key = `${compiledData.seed}.csv`;
 
   // save to s3
   try {
     const csvData = getCSVData(compiledData);
-    const s3Key = `${compiledData.seed}.csv`;
-    uploadedFile = await createObject(s3Key, csvData, 'text/csv');
+
+    await createObject(s3Key, csvData, 'text/csv');
   } catch (error) {
+    console.log(error);
     errors.push(error);
   }
 
@@ -84,5 +86,16 @@ export const scoreController = async (
    * and return the json
    */
 
-  res.json({ compiledData, uploadedFile, errors });
+  const response: {
+    compiledData: CompiledData;
+    s3Key?: string;
+    errors?: unknown[];
+  } = {
+    compiledData,
+    s3Key,
+  };
+  if (errors.length > 0) {
+    response.errors = errors;
+  }
+  res.json(response);
 };
