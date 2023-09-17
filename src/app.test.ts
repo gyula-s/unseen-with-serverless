@@ -20,4 +20,8 @@ describe('Express app', () => {
       expect(response.body.error).toEqual('NOT FOUND');
     });
   });
+
+  it.todo(
+    'should attempt to calculate the invisibility score when POST /score',
+  );
 });

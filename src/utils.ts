@@ -47,7 +47,7 @@ export const getInvisibilityScore = (
   return 1;
 };
 
-export const normaliseScore = (score: number): number => {
+export const getNormalisedScore = (score: number): number => {
   // figure out how to normalise the score
   // figure out min and max scores
   return 1;
