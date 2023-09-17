@@ -12,7 +12,7 @@ describe('getInvisibilityScore', () => {
       age: 39,
       gender: 'male',
     });
-    expect(score).toBe(14);
+    expect(score).toBe(18);
   });
 
   it('calculates correct invisibility score for a 39 year old male with a score of 50', () => {
@@ -21,7 +21,7 @@ describe('getInvisibilityScore', () => {
       age: 39,
       gender: 'male',
     });
-    expect(score).toBe(50);
+    expect(score).toBe(52);
   });
 
   it('calculates correct invisibility score for a 39 year old male with a score of 100', () => {
@@ -41,9 +41,10 @@ describe('getInvisibilityScore', () => {
 });
 
 describe('getNormalisedScore', () => {
-  it.todo('should return 0 if no invisibility is found');
-
-  it.todo('should return a normalised score');
+  it('should return a normalised score', () => {
+    const score = utils.getNormalisedScore(50, 'male');
+    expect(score).toBe(51);
+  });
 });
 
 // mock the fetch library

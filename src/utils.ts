@@ -67,27 +67,27 @@ export const getUserData = async (_params?: unknown): Promise<UserData> => {
 export const getNormalisedScore = (score: number, gender: Gender): number => {
   /**
    * approximation for min/max
-   * let's assume that the max age of a hero is 120
+   * let's assume that the max age of a hero is 66 before they retire
    * and the minimum age is 18
-   * the absolute minimum score a female hero can get is 0 while her age can be 120
-   * so the minimum score can be 8 * (0 - 120) = -600
+   * the absolute minimum score a female hero can get is 0 while her age can be 66
+   * so the minimum score can be 8 * (0 - 66) = -528
    * the absolute maximum score that a female hero can get is 100 while her age can be 18
    * so the maximum score can be 8 * (100 - 18) = 704
    * //the min/max scores could be better approximated, after looking at more data, age distribution, etc.
    * ----------------
+   * female min score is 8 * (0 - 66) = -528
    * female max score is 8 * (100 - 18) = 704
-   * female min score is 8 * (0 - 120) = -600
    *
+   * male min score is 5 * (0 - 66) = -330
    * male max score is 5 * (100 - 18) = 410
-   * male min score is 5 * (0 - 120) = -300
    */
   const minMaxScores = {
     female: {
-      min: -600,
+      min: -528,
       max: 704,
     },
     male: {
-      min: -300,
+      min: -330,
       max: 410,
     },
   };
