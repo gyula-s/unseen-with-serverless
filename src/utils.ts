@@ -145,3 +145,32 @@ export const getInvisibilityStatus = (score: number): string => {
       return 'Invisible';
   }
 };
+
+export interface CompiledData {
+  superheroScore: number;
+  invisibilityScore: number;
+  invisibilityStatus: string;
+  name: string;
+  dob: string;
+  age: number;
+  gender: string;
+  seed: string;
+  [key: string]: number | string;
+}
+/**
+ * generate CSV file
+ */
+export const getCSVData = (data: CompiledData): string => {
+  const columns = Object.keys(data);
+
+  // Create the header row
+  const header = columns.join(',');
+
+  // Create rows of data
+  const rows = columns.map((column) => data[column]).join(',');
+
+  // Combine the header and rows into a CSV string
+  const csv = [header, rows].join('\n');
+
+  return csv;
+};

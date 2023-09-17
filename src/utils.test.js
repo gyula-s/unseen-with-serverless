@@ -137,3 +137,21 @@ describe('getInvisibilityStatus', () => {
     expect(status).toBe('Invisible');
   });
 });
+
+describe('get csv data', () => {
+  it('should return csv data', () => {
+    const data = {
+      superheroScore: 43,
+      invisibilityScore: 56,
+      invisibilityStatus: 'Translucent',
+      name: 'Black Noir',
+      dob: '1999-09-18T18:42:34.319Z',
+      age: 23,
+      gender: 'male',
+    };
+    const csv = utils.getCSVData(data);
+    expect(csv).toBe(
+      'superheroScore,invisibilityScore,invisibilityStatus,name,dob,age,gender\n43,56,Translucent,Black Noir,1999-09-18T18:42:34.319Z,23,male',
+    );
+  });
+});
