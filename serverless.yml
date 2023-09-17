@@ -78,7 +78,7 @@ functions:
       - httpApi:
           path: "/score"
           method: "POST"
-    role: UploadRole
+    role: AccessRole
     environment:
       BUCKET: soosgyul-heroes-bucket-${self:custom.stage}
 
