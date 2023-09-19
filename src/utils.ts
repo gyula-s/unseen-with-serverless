@@ -94,10 +94,8 @@ export const getNormalisedScore = (score: number, gender: Gender): number => {
     },
   };
 
-  const normalisedScore =
-    ((score - minMaxScores[gender].min) /
-      (minMaxScores[gender].max - minMaxScores[gender].min)) *
-    100;
+  const { min, max } = minMaxScores[gender];
+  const normalisedScore = ((score - min) / (max - min)) * 100;
   return Math.floor(normalisedScore);
 };
 
